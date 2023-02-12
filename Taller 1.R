@@ -56,9 +56,11 @@ sapply(df18, function(x) sum(is.na(x))
 #5A
 #Training(70%) y testing (30%)
 
-id_train <- smaple (1:nrow(db2), size = 0.7*nrow(db2), replace =F) 
+id_train <- sample (1:nrow(db2), size = 0.7*nrow(db2), replace =F) 
 train <- db2["id_train"]
+set.seed(10101)
 
-id_test <- smaple (1:nrow(db2), size = 0.3*nrow(db2), replace =F) 
+id_test <- sample (1:nrow(db2), size = 0.3*nrow(db2), replace =F) 
 test <- db2["id_test"]
+set.seed(10101)
 
