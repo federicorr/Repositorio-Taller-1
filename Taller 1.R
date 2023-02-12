@@ -43,3 +43,5 @@ for (url in urls) {
 
 df <- dplyr::bind_rows(chunks)
 
+#mayores de 18
+df18<- df[df$age >=18, ]
