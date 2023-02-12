@@ -45,3 +45,10 @@ df <- dplyr::bind_rows(chunks)
 
 #mayores de 18
 df18<- df[df$age >=18, ]
+
+# Analicemos la estructura de la base
+glimpse(df18)
+sum(is.na(df18))
+
+# Chequeamos los NAs de la base
+sapply(df18, function(x) sum(is.na(x))
