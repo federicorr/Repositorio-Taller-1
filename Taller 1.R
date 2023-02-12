@@ -64,3 +64,13 @@ id_test <- sample (1:nrow(df), size = 0.3*nrow(df), replace =F)
 test <- df["id_test"]
 set.seed(10101)
 
+#Hacemos Lasso para saber la combinacion de variables que seria ideal en el modelo 
+# Para obtener un ajuste con regularizaci?n Lasso se indica argumento alpha = 1.
+
+modelo_lasso <- glmnet(
+  x = x_ingLab_m,
+  y = y_ingLab_m,
+  alpha = 1,
+  nlambda = 300,
+  standardize = FALSE
+
