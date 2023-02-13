@@ -195,13 +195,7 @@ peak_age #45
           
    #Estimación incondicional modelo de género
        
-    #Hallar logaritmo del salario
-       
-    log_inglab_h = base2$ingtot
-    log_inglab_h<-ifelse((log_inglab_h)==0,1,log_inglab_h) #Reemplazar los salarios = 0 por 1
-    log_inglab_h<- log(log_inglab_h)
-    df18<- cbind(df18,log_inglab_h)
-       
+        
     #Estimar modelo
     regresion2<- lm(log_inglab_h~sex, data=df18)
     lm_summary2=as.data.frame(summary(regresion2)$coefficients)
@@ -242,7 +236,7 @@ peak_age #45
         
       } 
       for (i in 1:R){
-        columnas2<- eta_mod11[i]+eta_mod22[i]*df18$sex+eta_mod33*base2$age+eta_mod44*df18$age2
+        columnas2<- eta_mod11[i]+eta_mod22[i]*df18$sex+eta_mod33*df18$age+eta_mod44*df18$age2
         y_predichos2[,i]<-columnas2
       }
       ee2<-rowSds(y_predichos2)
@@ -262,10 +256,10 @@ peak_age #45
       base_hombres2= subset(df18, base$sex==1)
       peak_hombre2<-(which.max(base_hombres$y_predicho3))
       peak_age_hombre2=(base_hombres$age[16])
-      as.integer(max(base_hombres$ingtot))
+      as.integer(max(base_hombres$log_inglab_h))
       
       #Peak age mujeres modelo y=age+age2+sex por bootstrap
-      base_mujeres2= subset(base2, base$sex==0)
+      base_mujeres2= subset(df18, df18$sex==0)
       peak_mujeres2<-(which.max(base_mujeres$y_predicho3))
       peak_age_mujer2=(base_mujeres$age[23])
       as.integer(max(base_mujeres$ingtot))
