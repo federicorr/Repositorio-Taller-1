@@ -116,6 +116,13 @@ ggplot(df18, aes(age, y_predicho)) + geom_point() +
   geom_ribbon(aes(ymin=IC_bajo, ymax=IC_alto), alpha=0.1, fill = "red", 
               color = "black", linetype = "dotted")
        
+#Hallar peak age 
+peak_y_predicho=(max(df18$y_predicho))
+peak_y_predicho #8.892299
+#este valor está en la posición 23
+peak_age=(df18$age[23])
+peak_age #45
+       
 #5A
 #Training(70%) y testing (30%)
 
