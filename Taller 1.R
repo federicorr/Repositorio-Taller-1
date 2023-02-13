@@ -144,8 +144,4 @@ modelo_lasso <- glmnet(
   #make this example reproducible
   set.seed(1)
   
-  #use 70% of dataset as training set and 30% as test set
-  sample <- sample(c(TRUE, FALSE), nrow(df18), replace=TRUE, prob=c(0.7,0.3))
-  train  <- df18[sample, ]
-  test   <- df18[!sample, ]
 
