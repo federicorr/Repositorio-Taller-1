@@ -64,7 +64,7 @@ df18 = df18 %>%
   mutate(age2 = (age)^2)
 ##BASE FINAL SELECCIONANDO VARIABLES
 df18 <- select(df18,college, maxEducLevel, age, age2, estrato1, sex, regSalud, cotPension, 
-                log_inglab_h, y_ingLab_m_ha,sizeFirm, microEmpresa, oficio, hoursWorkActualSecondJob, 
+                log_inglab_h, y_ingLab_m_ha,sizeFirm, microEmpresa, oficio, 
                 hoursWorkUsual, informal, relab )
        
 #PUNTO 3
