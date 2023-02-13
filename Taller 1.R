@@ -119,12 +119,12 @@ ggplot(df18, aes(age, y_predicho)) + geom_point() +
 #5A
 #Training(70%) y testing (30%)
 
-id_train <- sample (1:nrow(df), size = 0.7*nrow(df), replace =F) 
-train <- df["id_train"]
+id_train <- sample (1:nrow(df18), size = 0.7*nrow(df18), replace =F) 
+train <- df18["id_train"]
 set.seed(10101)
 
-id_test <- sample (1:nrow(df), size = 0.3*nrow(df), replace =F) 
-test <- df["id_test"]
+id_test <- sample (1:nrow(df18), size = 0.3*nrow(df18), replace =F) 
+test <- df18["id_test"]
 set.seed(10101)
 
 #Hacemos Lasso para saber la combinacion de variables que seria ideal en el modelo 
