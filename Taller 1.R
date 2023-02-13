@@ -126,9 +126,8 @@ df18 <- select(df18,college, maxEducLevel, age, age2, estrato1, sex, regSalud, c
     #Tabla de correlación
     correlacion <- (as.data.frame(cor(df18))) ; correlacion
     output_corr <- capture.output(correlacion, file=NULL, append =FALSE)
-    output_corr <-as.data.frame(output_corr) #convertir summary en tabla
-    write.table(x = output_corr, file = "summary.xlsx", sep = " ", 
-                row.names = FALSE, col.names = TRUE)
+    output_corr <-as.data.frame(output_corr)
+    
        
 #PUNTO 3 - Age-wage profile
        
