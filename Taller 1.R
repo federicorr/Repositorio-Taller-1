@@ -369,8 +369,9 @@ plot1<- ggplot(data=test, aes(y_ingLab_m_ha, predichos_modelo3))+
 
 
 
-
-
+#resultados 
+function(stargazer)
+stargazer(especificacion1, especificacion5)
 #5d
 
 CV_especificacion3 <- train(y_ingLab_m_ha~sex+maxEducLevel+age+estrato1+regSalud+cotPension+sizeFirm+oficio+informal+relab+ sex:maxEducLevel+ sex:age+sex:oficio+sex:informal,data=train)
