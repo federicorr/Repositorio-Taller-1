@@ -73,11 +73,10 @@ df18 <- select(df18,college, maxEducLevel, age, age2, estrato1, sex, regSalud, c
     
     #Variables continuas
        
-    ingreso <- (as.data.frame(summary(df18))) ; wage
+    wage <- (as.data.frame(summary(df18))) ; wage
     output <- capture.output(ingreso, file=NULL, append =FALSE)
     output_ad <-as.data.frame(output) #convertir summary en tabla
-    write.table(x = output_ad, file = "summary.xlsx", sep = " ", 
-                row.names = FALSE, col.names = TRUE)
+   
     
     wage <- df18 %>%  summarize(mean(df18$y_ingLab_m_ha,na.rm = T));wage
        
@@ -115,11 +114,7 @@ df18 <- select(df18,college, maxEducLevel, age, age2, estrato1, sex, regSalud, c
     #Histograma edad
     gp3<- ggplot() + geom_histogram(data = df18, aes(x=age));gp3
        
-    #Scatter wage-sexo
-    gp4<- ggplot()+geom_point(data=df18, aes(y=y_ingLab_m_ha, x=age))+ "división sex"
-    +ylab("Número de personas") + xlab("Sexo") + ggtitle("Número de personas por sexo")+ 
-      scale_x_discrete(limit = c("Hombre", "Mujer"))
-   
+    
     #Gráfico de dispersión del salario promedio por sexo
     grafico1 <- plot(a, main = "Salario promedio por sexo", xlab = "sexo", ylab = "Salario promedio", pch = 21,  bg = "yellow", col = "red", cex = 1, lwd = 2)
     ggsave(plot= grafico1 , file = "views/Grafico_wage_sex.jpeg")
@@ -195,13 +190,7 @@ peak_age #45
           
    #Estimación incondicional modelo de género
        
-    #Hallar logaritmo del salario
-       
-    log_inglab_h = base2$ingtot
-    log_inglab_h<-ifelse((log_inglab_h)==0,1,log_inglab_h) #Reemplazar los salarios = 0 por 1
-    log_inglab_h<- log(log_inglab_h)
-    df18<- cbind(df18,log_inglab_h)
-       
+        
     #Estimar modelo
     regresion2<- lm(log_inglab_h~sex, data=df18)
     lm_summary2=as.data.frame(summary(regresion2)$coefficients)
@@ -242,7 +231,7 @@ peak_age #45
         
       } 
       for (i in 1:R){
-        columnas2<- eta_mod11[i]+eta_mod22[i]*df18$sex+eta_mod33*base2$age+eta_mod44*df18$age2
+        columnas2<- eta_mod11[i]+eta_mod22[i]*df18$sex+eta_mod33*df18$age+eta_mod44*df18$age2
         y_predichos2[,i]<-columnas2
       }
       ee2<-rowSds(y_predichos2)
@@ -262,10 +251,10 @@ peak_age #45
       base_hombres2= subset(df18, base$sex==1)
       peak_hombre2<-(which.max(base_hombres$y_predicho3))
       peak_age_hombre2=(base_hombres$age[16])
-      as.integer(max(base_hombres$ingtot))
+      as.integer(max(base_hombres$log_inglab_h))
       
       #Peak age mujeres modelo y=age+age2+sex por bootstrap
-      base_mujeres2= subset(base2, base$sex==0)
+      base_mujeres2= subset(df18, df18$sex==0)
       peak_mujeres2<-(which.max(base_mujeres$y_predicho3))
       peak_age_mujer2=(base_mujeres$age[23])
       as.integer(max(base_mujeres$ingtot))
