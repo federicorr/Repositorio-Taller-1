@@ -243,19 +243,7 @@ peak_age #45
         geom_ribbon(aes(ymin=IC_bajo, ymax=IC_alto), alpha=0.1, fill = "green", 
                     color = "black", linetype = "dotted")+facet_grid(sex~.)
 
-      #Peak age hombres modelo y=age+age2+sex por bootstrap
-      base_hombres2= subset(df18, df18$sex==1)
-      peak_hombre2<-(which.max(base_hombres$y_predicho3))
-      peak_age_hombre2=(base_hombres$age[16])
-      as.integer(max(base_hombres$log_inglab_h))
-      
-      #Peak age mujeres modelo y=age+age2+sex por bootstrap
-      base_mujeres2= subset(df18, df18$sex==0)
-      peak_mujeres2<-(which.max(base_mujeres$y_predicho3))
-      peak_age_mujer2=(base_mujeres$age[23])
-      as.integer(max(base_mujeres$ingtot))
-
-      #Modelo con interacción age-sex para analisis de pendiente
+          #Modelo con interacción age-sex para analisis de pendiente
       regresion4<- lm(log_inglab_h~sex+age+age2+sex:age, data=df18) 
       summary(regresionaux)
       
