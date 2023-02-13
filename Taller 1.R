@@ -340,3 +340,30 @@ summary(especificacion5)
 #MSE especificación 5
 test$especificacion5<-predict(especificacion5,newdata = test)
 with(test,mean((y_ingLab_m_ha-especificacion5)^2))
+
+
+#Obs que el modelo no predijo
+#modelo ganador estimado en test
+especificacion3_test<-lm(y_ingLab_m_ha~sex+maxEducLevel+age+estrato1+regSalud+cotPension+
+                           sizeFirm+oficio+informal+relab+ sex:maxEducLevel+ sex:age+sex:oficio+sex:informal,data=train)
+test$especificacion3<-predict(especificacion3,newdata = test)
+
+#errores predichos modelo ganador
+predichos_modelo3<- predict(especificacion3_test)
+errores<- test$y_ingLab_m_ha ~predichos_modelo3
+
+#grafica
+plot1<- ggplot(data=test, aes(y_ingLab_m_ha, predichos_modelo3))+
+  geom_point()+geom_smooth(color="green")+
+  theme_bw() +
+  labs(x = "logaritmo del ingreso", 
+       y = "Ingreso predicho mejor modelo",
+       title = "Ajuste del modelo con menor MSE", size=0,5) +
+  scale_color_manual(name = "Model", values = c("red", "blue"))
+
+
+
+
+
+#5d
+
