@@ -119,14 +119,11 @@ ggplot(df18, aes(age, y_predicho)) + geom_point() +
 #5A
 #Training(70%) y testing (30%)
 
-id_train <- sample (1:nrow(df18), size = 0.7*nrow(df18), replace =F) 
-train <- df18["id_train"]
-set.seed(10101)
+sample <- sample(c(TRUE, FALSE), nrow(df18), replace=TRUE, prob=c(0.7,0.3))
+train  <- df18[sample, ]
+test   <- df18[!sample, ]
 
-id_test <- sample (1:nrow(df18), size = 0.3*nrow(df18), replace =F) 
-test <- df18["id_test"]
-set.seed(10101)
-
+#5b
 #Hacemos Lasso para saber la combinacion de variables que seria ideal en el modelo 
 # Para obtener un ajuste con regularizaci?n Lasso se indica argumento alpha = 1.
 
@@ -136,4 +133,12 @@ modelo_lasso <- glmnet(
   alpha = 1,
   nlambda = 300,
   standardize = FALSE
+  
+  #make this example reproducible
+  set.seed(1)
+  
+  #use 70% of dataset as training set and 30% as test set
+  sample <- sample(c(TRUE, FALSE), nrow(df18), replace=TRUE, prob=c(0.7,0.3))
+  train  <- df18[sample, ]
+  test   <- df18[!sample, ]
 
