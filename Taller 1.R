@@ -316,11 +316,19 @@ set.seed(10101)
 
 #5b
 
+#Crear variable log de ingresos laborales por horas
+train = train %>% 
+  mutate(log_inglab_h = log(y_ingLab_m_ha))
+
+#Crear variable log de ingresos laborales por horas
+test = test %>% 
+  mutate(log_inglab_h = log(y_ingLab_m_ha))
+
 #1
-especificacion1 <-lm(y_ingLab_m_ha~age+sex+sex:age,data=train)
+especificacion1 <-lm(log_inglab_h~age+sex+sex:age,data=train)
 test$especificacion1<-predict(especificacion1,newdata = test)
 #MSE especificación 1
-with(test,mean((y_ingLab_m_ha-especificacion1)^2))
+with(test,mean((log_inglab_h-especificacion1)^2))
 
 #2
 especificacion2 <-lm(y_ingLab_m_ha~sex+maxEducLevel+age+estrato1+regSalud+cotPension+sizeFirm+oficio+informal+relab,data=train)
