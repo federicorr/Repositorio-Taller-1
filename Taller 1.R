@@ -262,7 +262,7 @@ peak_age #45
        
       #Estimación modelo condicional
       regresion5<- lm(log_inglab_h~sex+maxEducLevel+age+age2+estrato1+regSalud+cotPension
-                      +sizeFirm+oficio+hoursWorkUsual+informal
+                      +sizeFirm+hoursWorkUsual+informal
                       +relab, data=df18)
       lm_summary5=as.data.frame(summary(regresion5$coefficients))
       
