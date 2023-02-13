@@ -83,11 +83,17 @@ df18 <- select(df18,college, maxEducLevel, age, age2, estrato1, sex, regSalud, c
         # Promedio de salario por grupos
        
     # por sexo
-    a <- df18 %>% group_by(sex) %>% summarize(mean(df18$y_ingLab_m_ha,na.rm = T));a
+    a <- df18 %>% 
+    group_by(sex) %>% 
+    summarize(mean = mean(y_ingLab_m_ha))
     # por edad
-    b <- df18 %>% group_by(age) %>% summarize(mean(y_ingLab_m_ha,na.rm = T));b 
+    b <- df18 %>% 
+    group_by(age) %>% 
+    summarize(mean = mean(y_ingLab_m_ha))
     # por estrato
-    c <- df18 %>% group_by(estrato1) %>% summarize(mean(y_ingLab_m_ha,na.rm = T));c
+    c <- df18 %>% 
+    group_by(estrato1) %>% 
+    summarize(mean = mean(y_ingLab_m_ha))
     
          #Varianzas de variables continuas
     df18 %>% var()
