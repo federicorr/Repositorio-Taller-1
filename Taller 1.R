@@ -367,3 +367,7 @@ plot1<- ggplot(data=test, aes(y_ingLab_m_ha, predichos_modelo3))+
 
 #5d
 
+CV_especificacion3 <- train(y_ingLab_m_ha~sex+maxEducLevel+age+estrato1+regSalud+cotPension+sizeFirm+oficio+informal+relab+ sex:maxEducLevel+ sex:age+sex:oficio+sex:informal,data=train)
+                            data = df18,
+                            trControl = trainControl(method = "cv", number = 5), method = "lm")
+
