@@ -202,10 +202,10 @@ peak_age #45
     base2<- cbind(df18, y_predicho3)
    
       #Peak age mujeres con modelo age 
-      base_mujeres= subset(df18, base$sex==0)
+      base_mujeres= subset(df18, df18$sex==0)
     
       #Peak age hombres con modelo de age 
-      base_hombres= subset(df18, base$sex==1)
+      base_hombres= subset(df18, df18$sex==1)
       
      
       #Errores bootstrap modelo y~age+age2+sex
