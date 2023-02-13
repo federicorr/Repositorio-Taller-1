@@ -327,18 +327,39 @@ sample <- sample(c(TRUE, FALSE), nrow(df18), replace=TRUE, prob=c(0.7,0.3))
 train  <- df18[sample, ]
 test   <- df18[!sample, ]
 set.seed(10101)
-#5b
-#Hacemos Lasso para saber la combinacion de variables que seria ideal en el modelo 
-# Para obtener un ajuste con regularizaci?n Lasso se indica argumento alpha = 1.
 
-modelo_lasso <- glmnet(
-  x = x_ingLab_m,
-  y = y_ingLab_m,
-  alpha = 1,
-  nlambda = 300,
-  standardize = FALSE
-  
-  #make this example reproducible
-  set.seed(1)
-  
-   
+
+#5b
+
+#1
+especificacion1 <-lm(y_ingLab_m_ha~age+sex+sex:age,data=train)
+test$especificacion1<-predict(especificacion1,newdata = test)
+#MSE especificación 1
+with(test,mean((y_ingLab_m_ha-especificacion1)^2))
+
+#2
+especificacion2 <-lm(y_ingLab_m_ha~sex+maxEducLevel+age+estrato1+regSalud+cotPension+sizeFirm+oficio+informal+relab,data=train)
+test$especificacion2<-predict(especificacion2,newdata = test)
+#MSE especificación 2
+with(test,mean((y_ingLab_m_ha-especificacion2)^2))
+
+#3
+especificacion3 <-lm(y_ingLab_m_ha~sex+maxEducLevel+age+estrato1+regSalud+cotPension+
+                       sizeFirm+oficio+informal+relab+ sex:maxEducLevel+ sex:age+sex:oficio+sex:informal,data=train)
+test$especificacion3<-predict(especificacion3,newdata = test)
+#MSE especificación 3
+with(test,mean((y_ingLab_m_ha-especificacion3)^2))
+
+#4
+especificacion4 <-lm(y_ingLab_m_ha~sex+maxEducLevel+age+estrato1+regSalud+cotPension+
+                       sizeFirm+oficio+informal+relab+ sex:maxEducLevel +sex:age+sex:informal: maxEducLevel, data=train)
+test$especificacion4<-predict(especificacion4,newdata = test)
+#MSE especificación 4
+with(test,mean((y_ingLab_m_ha-especificacion4)^2))
+
+#5
+especificacion5= lm(y_ingLab_m_ha~age, data=train) 
+summary(especificacion5)
+#MSE especificación 5
+test$especificacion5<-predict(especificacion5,newdata = test)
+with(test,mean((y_ingLab_m_ha-especificacion5)^2))
