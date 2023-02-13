@@ -129,7 +129,7 @@ peak_age #45
 sample <- sample(c(TRUE, FALSE), nrow(df18), replace=TRUE, prob=c(0.7,0.3))
 train  <- df18[sample, ]
 test   <- df18[!sample, ]
-
+set.seed(10101)
 #5b
 #Hacemos Lasso para saber la combinacion de variables que seria ideal en el modelo 
 # Para obtener un ajuste con regularizaci?n Lasso se indica argumento alpha = 1.
