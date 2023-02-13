@@ -73,11 +73,10 @@ df18 <- select(df18,college, maxEducLevel, age, age2, estrato1, sex, regSalud, c
     
     #Variables continuas
        
-    ingreso <- (as.data.frame(summary(df18))) ; wage
+    wage <- (as.data.frame(summary(df18))) ; wage
     output <- capture.output(ingreso, file=NULL, append =FALSE)
     output_ad <-as.data.frame(output) #convertir summary en tabla
-    write.table(x = output_ad, file = "summary.xlsx", sep = " ", 
-                row.names = FALSE, col.names = TRUE)
+   
     
     wage <- df18 %>%  summarize(mean(df18$y_ingLab_m_ha,na.rm = T));wage
        
@@ -115,11 +114,7 @@ df18 <- select(df18,college, maxEducLevel, age, age2, estrato1, sex, regSalud, c
     #Histograma edad
     gp3<- ggplot() + geom_histogram(data = df18, aes(x=age));gp3
        
-    #Scatter wage-sexo
-    gp4<- ggplot()+geom_point(data=df18, aes(y=y_ingLab_m_ha, x=age))+ "división sex"
-    +ylab("Número de personas") + xlab("Sexo") + ggtitle("Número de personas por sexo")+ 
-      scale_x_discrete(limit = c("Hombre", "Mujer"))
-   
+    
     #Gráfico de dispersión del salario promedio por sexo
     grafico1 <- plot(a, main = "Salario promedio por sexo", xlab = "sexo", ylab = "Salario promedio", pch = 21,  bg = "yellow", col = "red", cex = 1, lwd = 2)
     ggsave(plot= grafico1 , file = "views/Grafico_wage_sex.jpeg")
