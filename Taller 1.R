@@ -245,7 +245,7 @@ peak_age #45
 
           #Modelo con interacción age-sex para analisis de pendiente
       regresion4<- lm(log_inglab_h~sex+age+age2+sex:age, data=df18) 
-      summary(regresionaux)
+      summary(regresion4)
       
       stargazer(regresion4,regresion3, regresion2, regresion1,type="text")
 
@@ -262,21 +262,17 @@ peak_age #45
        
       #Estimación modelo condicional
       regresion5<- lm(log_inglab_h~sex+maxEducLevel+age+age2+estrato1+regSalud+cotPension
-                      +sizeFirm+oficio+hoursWorkActualSecondJob+hoursWorkUsual+informal
-                      +relab, data=log_inglab_h)
+                      +sizeFirm+oficio+hoursWorkUsual+informal
+                      +relab, data=df18)
       lm_summary5=as.data.frame(summary(regresion5$coefficients))
       
       
       #FWL
-      df18<-df18 %>% mutate(res_y_a=lm(log_inglab_h~maxEducLevel+age+age2+estrato1+regSalud
-                                         +cotPension+sizeFirm+oficio+hoursWorkActualSecondJob
-                                         +hoursWorkUsual+informal+relab,df18)$residuals, #Residuales con ingreso
-                              res_s_a=lm(sex~sex+maxEducLevel+age+age2+estrato1+regSalud
-                                         +cotPension+sizeFirm+oficio+hoursWorkActualSecondJob
-                                         +hoursWorkUsual+informal+relab,df18)$residuals, #Residuales con género
-      )
+      res_y_a <- lm("log_inglab_h~maxEducLevel + age + age2 + estrato1 + regSalud + cotPension + sizeFirm + oficio + hoursWorkUsual + informal + relab", data = df18)
+      res_s_a <- lm("sex~sex + maxEducLevel + age + age2 + estrato1 + regSalud + cotPension + sizeFirm + oficio + hoursWorkUsual + informal + relab", data = df18)
+
+      regresion6<-lm(res_y_a$residuals~res_s_a$residuals-1,df18)
       
-      regresion6<-lm(res_y_a~res_s_a-1,df18)
       
       #Boostrap FWL
       
@@ -287,7 +283,7 @@ peak_age #45
       replicas<- boot(data = df18, statistic = eta.fn, R = 1000)
       
       
-      stargazer(rregresion3, regresion5, regresion6,type="text")
+      stargazer(regresion3, regresion5, regresion6,type="text")
 
        
 #PUNTO 5: Predicting earnings
