@@ -215,12 +215,12 @@ peak_age #45
       eta_mod44<-rep(0,R)
       
       set.seed(12345)
-      n<- length(df18$)
+      n<- length(df18$age)
       R<-1000
       y_predichos2<- matrix(NA,n,R)
       for (i in 1:R){
-        db_sample<- sample_frac(df18,size=1, replace=TRUE)
-        f2<- lm(log_inglab_h~sex+age+age2, db_sample)
+        df_sample<- sample_frac(df18,size=1, replace=TRUE)
+        f2<- lm(log_inglab_h~sex+age+age2, df_sample)
         coefs2<- f2$coefficients
         
         eta_mod11[i]<- coefs2[1]
@@ -235,19 +235,16 @@ peak_age #45
       }
       ee2<-rowSds(y_predichos2)
       df22<-cbind(df18,ee2)
-      IC_bajo2=df18$y_predicho3-1.96*ee2
-      IC_alto2=df18$y_predicho3+1.96*ee2
-      
-      df18<- cbind(df18,IC_alto2, IC_bajo2)
-      
+    
+         
       #Gráfico con modelo y=age+age2+sex divido entre el género por bootstrap
       ggplot(df18, aes(age, y_predicho3)) + geom_point() +                                
         geom_line(color = "dark green", size = 2) +
-        geom_ribbon(aes(ymin=IC_bajo2, ymax=IC_alto2), alpha=0.1, fill = "green", 
+        geom_ribbon(aes(ymin=IC_bajo, ymax=IC_alto), alpha=0.1, fill = "green", 
                     color = "black", linetype = "dotted")+facet_grid(sex~.)
 
       #Peak age hombres modelo y=age+age2+sex por bootstrap
-      base_hombres2= subset(df18, base$sex==1)
+      base_hombres2= subset(df18, df18$sex==1)
       peak_hombre2<-(which.max(base_hombres$y_predicho3))
       peak_age_hombre2=(base_hombres$age[16])
       as.integer(max(base_hombres$log_inglab_h))
